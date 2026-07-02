@@ -1,15 +1,90 @@
-OpenAI Secure Network
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>جاري التحقق...</title>
 
-Connecting...
+<style>
+body{
+    margin:0;
+    background:#000;
+    color:#00ff66;
+    font-family:Consolas, monospace;
+    overflow:hidden;
+}
 
-██████░░░░
+#terminal{
+    padding:30px;
+    font-size:22px;
+    white-space:pre-line;
+}
 
-Searching...
+.cursor{
+    animation:blink 0.8s infinite;
+}
 
-Student detected ✔
+@keyframes blink{
+50%{opacity:0;}
+}
+</style>
 
-AI Confidence:
-99.8%
-🤖 الاسم:
+</head>
 
-..........
+<body>
+
+<div id="terminal"></div>
+
+<script>
+
+const lines=[
+"Connecting...",
+"",
+"Access Granted ✔",
+"",
+"Scanning device...",
+"██████████ 100%",
+"",
+"Analyzing...",
+"",
+"📱 Device Found",
+"🧠 Curiosity Level: 100%",
+"😴 Sleep Level: VERY HIGH",
+"📚 Summer Homework: 0",
+"",
+"Searching student...",
+"",
+"😂😂😂",
+"",
+"لا تخاف 😎",
+"",
+"هذا مجرد مقلب بسيط.",
+"",
+"أتمنى لك عطلة صيفية رائعة 🌞",
+"",
+"ونشوفك السنة الجاية",
+"",
+"مع تحيات",
+"أستاذ خالد 🤍"
+];
+
+let i=0;
+const terminal=document.getElementById("terminal");
+
+function typeLine(){
+    if(i<lines.length){
+        terminal.innerHTML+=lines[i]+"<br>";
+        window.scrollTo(0,document.body.scrollHeight);
+        i++;
+        setTimeout(typeLine,700);
+    }else{
+        terminal.innerHTML+="<br><span class='cursor'>█</span>";
+    }
+}
+
+typeLine();
+
+</script>
+
+</body>
+</html>
