@@ -15,7 +15,7 @@ body{
 
 #terminal{
     padding:30px;
-    font-size:22px;
+    font-size:20px;
     white-space:pre-line;
     line-height:1.6;
 }
@@ -28,19 +28,27 @@ body{
     50%{opacity:0;}
 }
 
-/* تحسين بسيط للإحساس */
 .glow{
-    text-shadow: 0 0 10px #00ff66;
+    text-shadow:0 0 10px #00ff66;
 }
 
+/* glitch خفيف */
+.glitch{
+    animation: flicker 2s infinite;
+}
+
+@keyframes flicker{
+    0%,100%{opacity:1;}
+    50%{opacity:0.85;}
+}
 </style>
 </head>
 
 <body>
 
-<div id="terminal" class="glow"></div>
+<div id="terminal" class="glow glitch"></div>
 
-<!-- 🔊 صوت خفيف -->
+<!-- 🔊 صوت -->
 <audio id="sound">
   <source src="https://www.myinstants.com/media/sounds/magic-chime.mp3">
 </audio>
@@ -70,13 +78,18 @@ const lines = [
 "😂😂😂",
 "",
 "لا تخاف 😎",
-"",
 "هذا مجرد مقلب بسيط...",
 "",
 "🎉 ACCESS CONFIRMED",
 "🟢 الحالة: عطلة رسمية",
 "",
-"🔥 استمتع قبل العودة للواقع"
+"🔥 استمتع قبل العودة للواقع",
+"",
+"──────────────",
+"مع تحيات",
+"أستاذ خالد 🤍",
+"",
+"█"
 ];
 
 let i = 0;
@@ -86,22 +99,25 @@ function typeLine(){
     if(i < lines.length){
         terminal.innerHTML += lines[i] + "\n";
         window.scrollTo(0, document.body.scrollHeight);
+
+        let delay = (lines[i] === "" ? 450 : 650);
+
         i++;
-
-        // سرعة ذكية (أجمل من الثابت)
-        let delay = (lines[i] === "" ? 500 : 700);
-
         setTimeout(typeLine, delay);
-    }
-    else{
-        terminal.innerHTML += "\n<span class='cursor'>█</span>";
-
-        // تشغيل الصوت عند النهاية
-        document.getElementById("sound").play().catch(()=>{});
+    } else {
+        terminal.innerHTML += "<span class='cursor'>█</span>";
     }
 }
 
 typeLine();
+
+/* 🔊 صوت مضمون بعد أول تفاعل */
+function playSound(){
+    document.getElementById("sound").play().catch(()=>{});
+}
+
+document.addEventListener("click", playSound, { once:true });
+document.addEventListener("touchstart", playSound, { once:true });
 
 </script>
 
