@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>CLASS SYSTEM ACCESS</title>
+<title>CLASS SYSTEM VIP</title>
 
 <style>
 body{
@@ -23,8 +23,7 @@ body{
 }
 
 .glitch{
-  font-size:22px;
-  animation:blink 0.8s infinite;
+  animation:blink 0.7s infinite;
 }
 
 @keyframes blink{
@@ -33,7 +32,7 @@ body{
 
 .bar{
   width:300px;
-  height:12px;
+  height:10px;
   background:#222;
   margin:20px auto;
   border-radius:10px;
@@ -44,22 +43,11 @@ body{
   height:100%;
   width:0%;
   background:#00ff99;
-  animation:load 2.5s forwards;
+  animation:load 2.8s forwards;
 }
 
 @keyframes load{
   100%{width:100%;}
-}
-
-button{
-  padding:12px 20px;
-  border:none;
-  background:#00ff99;
-  color:black;
-  font-weight:bold;
-  border-radius:8px;
-  cursor:pointer;
-  margin-top:20px;
 }
 
 .hidden{display:none;}
@@ -69,40 +57,43 @@ button{
 <body>
 
 <div class="screen" id="boot">
-  <h2 class="glitch">🔐 CLASS SYSTEM ACCESSING...</h2>
-  <p>Scanning student device...</p>
+  <h2 class="glitch">🔐 SYSTEM ACCESSING...</h2>
+  <p>Scanning student profile...</p>
   <div class="bar"><div class="fill"></div></div>
-  <p id="status">Analyzing behavior...</p>
+  <p id="status">Loading data...</p>
 </div>
 
 <div class="screen hidden" id="main">
-  <h1>🎯 ACCESS GRANTED</h1>
+  <h1>🎉 ACCESS GRANTED</h1>
   <h2 id="student"></h2>
 
   <p style="color:white">
-    النظام اكتشف أنك في وضع: <b>🟢 عطلة رسمية VIP</b>
+    الوضع الحالي: <b>🟢 عطلة رسمية</b>
   </p>
 
-  <button onclick="finalMsg()">افتح التقرير السري</button>
-
-  <h2 id="msg" style="margin-top:20px;"></h2>
+  <h2 id="msg"></h2>
 </div>
 
+<!-- 🔊 صوت -->
+<audio id="sound">
+  <source src="https://www.myinstants.com/media/sounds/magic-chime.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-// 👇 اسم من الرابط (VIP feature)
+
 const params = new URLSearchParams(window.location.search);
 const name = params.get("name") || "طالب مجهول";
 
 document.getElementById("student").innerText =
-"👤 Student: " + name;
+"👤 " + name;
 
-// شاشة التحميل
+// رسائل تحميل
 let texts = [
-"Checking homework status...",
+"Checking homework...",
 "Deleting stress files...",
-"Analyzing sleep level...",
-"Bypassing school firewall...",
-"Almost done..."
+"Analyzing behavior...",
+"Bypassing school rules...",
+"Finalizing access..."
 ];
 
 let i = 0;
@@ -112,25 +103,27 @@ let interval = setInterval(()=>{
   if(i >= texts.length) clearInterval(interval);
 },600);
 
-// الانتقال
+// الانتقال التلقائي
 setTimeout(()=>{
   document.getElementById("boot").classList.add("hidden");
   document.getElementById("main").classList.remove("hidden");
-},3000);
 
-// الرسالة النهائية
-function finalMsg(){
+  // 🎵 تشغيل الصوت
+  document.getElementById("sound").play();
+
   const msgs = [
-    "🚨 لا يوجد واجبات... استمتع قبل ما تنكشف الحقيقة 😏",
-    "📢 النظام يؤكد: الدراسة غير موجودة في العطلة",
-    "😴 يرجى إغلاق الدماغ وتشغيل الراحة فوراً",
-    "🎉 تم تحويلك رسمياً إلى وضع Lazy Mode",
-    "⚠️ أي تفكير بالدراسة سيعتبر خطأ نظام"
+    "😌 لا واجبات... روح نام وانت مرتاح",
+    "🎉 تم تأكيد: العطلة فعالة 100%",
+    "😎 النظام لا يجد أي دراسة حالياً",
+    "🚫 التفكير بالدراسة غير مسموح",
+    "🔥 استمتع قبل العودة للواقع"
   ];
 
   document.getElementById("msg").innerText =
     msgs[Math.floor(Math.random()*msgs.length)];
-}
+
+},3000);
+
 </script>
 
 </body>
