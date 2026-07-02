@@ -1,89 +1,136 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>جاري التحقق...</title>
+<title>CLASS SYSTEM ACCESS</title>
 
 <style>
 body{
-    margin:0;
-    background:#000;
-    color:#00ff66;
-    font-family:Consolas, monospace;
-    overflow:hidden;
+  margin:0;
+  font-family: monospace;
+  background:black;
+  color:#00ff99;
+  text-align:center;
+  overflow:hidden;
 }
 
-#terminal{
-    padding:30px;
-    font-size:22px;
-    white-space:pre-line;
+.screen{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:90%;
 }
 
-.cursor{
-    animation:blink 0.8s infinite;
+.glitch{
+  font-size:22px;
+  animation:blink 0.8s infinite;
 }
 
 @keyframes blink{
-50%{opacity:0;}
+  50%{opacity:0.3;}
 }
-</style>
 
+.bar{
+  width:300px;
+  height:12px;
+  background:#222;
+  margin:20px auto;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.fill{
+  height:100%;
+  width:0%;
+  background:#00ff99;
+  animation:load 2.5s forwards;
+}
+
+@keyframes load{
+  100%{width:100%;}
+}
+
+button{
+  padding:12px 20px;
+  border:none;
+  background:#00ff99;
+  color:black;
+  font-weight:bold;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:20px;
+}
+
+.hidden{display:none;}
+</style>
 </head>
 
 <body>
 
-<div id="terminal"></div>
+<div class="screen" id="boot">
+  <h2 class="glitch">🔐 CLASS SYSTEM ACCESSING...</h2>
+  <p>Scanning student device...</p>
+  <div class="bar"><div class="fill"></div></div>
+  <p id="status">Analyzing behavior...</p>
+</div>
+
+<div class="screen hidden" id="main">
+  <h1>🎯 ACCESS GRANTED</h1>
+  <h2 id="student"></h2>
+
+  <p style="color:white">
+    النظام اكتشف أنك في وضع: <b>🟢 عطلة رسمية VIP</b>
+  </p>
+
+  <button onclick="finalMsg()">افتح التقرير السري</button>
+
+  <h2 id="msg" style="margin-top:20px;"></h2>
+</div>
 
 <script>
+// 👇 اسم من الرابط (VIP feature)
+const params = new URLSearchParams(window.location.search);
+const name = params.get("name") || "طالب مجهول";
 
-const lines=[
-"Connecting...",
-"",
-"Access Granted ✔",
-"",
-"Scanning device...",
-"██████████ 100%",
-"",
-"Analyzing...",
-"",
-"📱 Device Found",
-"🧠 Curiosity Level: 100%",
-"😴 Sleep Level: VERY HIGH",
-"📚 Summer Homework: 0",
-"",
-"Searching student...",
-"",
-"😂😂😂",
-"",
-"لا تخاف 😎",
-"",
-"هذا مجرد مقلب بسيط.",
-"",
-"أتمنى لك عطلة صيفية رائعة 🌞",
-"",
-"ونشوفك السنة الجاية",
-"",
-"مع تحيات",
-"أستاذ خالد 🤍"
+document.getElementById("student").innerText =
+"👤 Student: " + name;
+
+// شاشة التحميل
+let texts = [
+"Checking homework status...",
+"Deleting stress files...",
+"Analyzing sleep level...",
+"Bypassing school firewall...",
+"Almost done..."
 ];
 
-let i=0;
-const terminal=document.getElementById("terminal");
+let i = 0;
+let interval = setInterval(()=>{
+  document.getElementById("status").innerText = texts[i];
+  i++;
+  if(i >= texts.length) clearInterval(interval);
+},600);
 
-function typeLine(){
-    if(i<lines.length){
-        terminal.innerHTML+=lines[i]+"<br>";
-        window.scrollTo(0,document.body.scrollHeight);
-        i++;
-        setTimeout(typeLine,700);
-    }else{
-        terminal.innerHTML+="<br><span class='cursor'>█</span>";
-    }
+// الانتقال
+setTimeout(()=>{
+  document.getElementById("boot").classList.add("hidden");
+  document.getElementById("main").classList.remove("hidden");
+},3000);
+
+// الرسالة النهائية
+function finalMsg(){
+  const msgs = [
+    "🚨 لا يوجد واجبات... استمتع قبل ما تنكشف الحقيقة 😏",
+    "📢 النظام يؤكد: الدراسة غير موجودة في العطلة",
+    "😴 يرجى إغلاق الدماغ وتشغيل الراحة فوراً",
+    "🎉 تم تحويلك رسمياً إلى وضع Lazy Mode",
+    "⚠️ أي تفكير بالدراسة سيعتبر خطأ نظام"
+  ];
+
+  document.getElementById("msg").innerText =
+    msgs[Math.floor(Math.random()*msgs.length)];
 }
-
-typeLine();
-
 </script>
 
 </body>
