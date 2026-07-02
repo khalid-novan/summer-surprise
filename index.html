@@ -83,11 +83,17 @@ const lines = [
 "",
 "🎉 ACCESS CONFIRMED | تم تأكيد الدخول",
 "🟢 Status: Summer Mode | الحالة: عطلة رسمية",
+
 "",
 "🔥 استمتع قبل العودة للواقع | Enjoy before reality returns",
 
 "",
 "──────────────",
+"System Status: CLOSED | تم إغلاق النظام",
+"All checks completed ✔ | تم الانتهاء من الفحص ✔",
+"No issues detected 😎 | لا توجد مشاكل 😎",
+
+"",
 "مع تحيات | Regards",
 "أستاذ خالد 🤍",
 
@@ -103,7 +109,7 @@ function typeLine(){
         terminal.innerHTML += lines[i] + "\n";
         window.scrollTo(0, document.body.scrollHeight);
 
-        let delay = (lines[i] === "" ? 400 : 650);
+        let delay = 600 + Math.random() * 200;
 
         i++;
         setTimeout(typeLine, delay);
@@ -114,9 +120,11 @@ function typeLine(){
 
 typeLine();
 
-/* 🔊 صوت بعد أول تفاعل (مضمون) */
+/* 🔊 صوت مضمون عند أول تفاعل */
 function playSound(){
-    document.getElementById("sound").play().catch(()=>{});
+    const s = document.getElementById("sound");
+    s.volume = 0.6;
+    s.play().catch(()=>{});
 }
 
 document.addEventListener("click", playSound, { once:true });
