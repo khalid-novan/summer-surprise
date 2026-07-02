@@ -1,128 +1,107 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>CLASS SYSTEM VIP</title>
+<title>CLASS SYSTEM ACCESS</title>
 
 <style>
 body{
-  margin:0;
-  font-family: monospace;
-  background:black;
-  color:#00ff99;
-  text-align:center;
-  overflow:hidden;
+    margin:0;
+    background:#000;
+    color:#00ff66;
+    font-family:Consolas, monospace;
+    overflow:hidden;
 }
 
-.screen{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:90%;
+#terminal{
+    padding:30px;
+    font-size:22px;
+    white-space:pre-line;
+    line-height:1.6;
 }
 
-.glitch{
-  animation:blink 0.7s infinite;
+.cursor{
+    animation:blink 0.8s infinite;
 }
 
 @keyframes blink{
-  50%{opacity:0.3;}
+    50%{opacity:0;}
 }
 
-.bar{
-  width:300px;
-  height:10px;
-  background:#222;
-  margin:20px auto;
-  border-radius:10px;
-  overflow:hidden;
+/* تحسين بسيط للإحساس */
+.glow{
+    text-shadow: 0 0 10px #00ff66;
 }
 
-.fill{
-  height:100%;
-  width:0%;
-  background:#00ff99;
-  animation:load 2.8s forwards;
-}
-
-@keyframes load{
-  100%{width:100%;}
-}
-
-.hidden{display:none;}
 </style>
 </head>
 
 <body>
 
-<div class="screen" id="boot">
-  <h2 class="glitch">🔐 SYSTEM ACCESSING...</h2>
-  <p>Scanning student profile...</p>
-  <div class="bar"><div class="fill"></div></div>
-  <p id="status">Loading data...</p>
-</div>
+<div id="terminal" class="glow"></div>
 
-<div class="screen hidden" id="main">
-  <h1>🎉 ACCESS GRANTED</h1>
-  <h2 id="student"></h2>
-
-  <p style="color:white">
-    الوضع الحالي: <b>🟢 عطلة رسمية</b>
-  </p>
-
-  <h2 id="msg"></h2>
-</div>
-
-<!-- 🔊 صوت -->
+<!-- 🔊 صوت خفيف -->
 <audio id="sound">
-  <source src="https://www.myinstants.com/media/sounds/magic-chime.mp3" type="audio/mpeg">
+  <source src="https://www.myinstants.com/media/sounds/magic-chime.mp3">
 </audio>
 
 <script>
 
-const params = new URLSearchParams(window.location.search);
-const name = params.get("name") || "طالب مجهول";
-
-document.getElementById("student").innerText =
-"👤 " + name;
-
-// رسائل تحميل
-let texts = [
-"Checking homework...",
-"Deleting stress files...",
-"Analyzing behavior...",
-"Bypassing school rules...",
-"Finalizing access..."
+const lines = [
+"Connecting to school system...",
+"Establishing secure link...",
+"",
+"Access Granted ✔",
+"",
+"Scanning device...",
+"████████████ 100%",
+"",
+"Analyzing student profile...",
+"",
+"📱 Device Found",
+"🧠 Curiosity Level: HIGH",
+"😴 Sleep Level: VERY HIGH",
+"📚 Summer Homework: NONE DETECTED",
+"",
+"Searching identity...",
+"",
+"👤 Student recognized...",
+"",
+"😂😂😂",
+"",
+"لا تخاف 😎",
+"",
+"هذا مجرد مقلب بسيط...",
+"",
+"🎉 ACCESS CONFIRMED",
+"🟢 الحالة: عطلة رسمية",
+"",
+"🔥 استمتع قبل العودة للواقع"
 ];
 
 let i = 0;
-let interval = setInterval(()=>{
-  document.getElementById("status").innerText = texts[i];
-  i++;
-  if(i >= texts.length) clearInterval(interval);
-},600);
+const terminal = document.getElementById("terminal");
 
-// الانتقال التلقائي
-setTimeout(()=>{
-  document.getElementById("boot").classList.add("hidden");
-  document.getElementById("main").classList.remove("hidden");
+function typeLine(){
+    if(i < lines.length){
+        terminal.innerHTML += lines[i] + "\n";
+        window.scrollTo(0, document.body.scrollHeight);
+        i++;
 
-  // 🎵 تشغيل الصوت
-  document.getElementById("sound").play();
+        // سرعة ذكية (أجمل من الثابت)
+        let delay = (lines[i] === "" ? 500 : 700);
 
-  const msgs = [
-    "😌 لا واجبات... روح نام وانت مرتاح",
-    "🎉 تم تأكيد: العطلة فعالة 100%",
-    "😎 النظام لا يجد أي دراسة حالياً",
-    "🚫 التفكير بالدراسة غير مسموح",
-    "🔥 استمتع قبل العودة للواقع"
-  ];
+        setTimeout(typeLine, delay);
+    }
+    else{
+        terminal.innerHTML += "\n<span class='cursor'>█</span>";
 
-  document.getElementById("msg").innerText =
-    msgs[Math.floor(Math.random()*msgs.length)];
+        // تشغيل الصوت عند النهاية
+        document.getElementById("sound").play().catch(()=>{});
+    }
+}
 
-},3000);
+typeLine();
 
 </script>
 
